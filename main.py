@@ -1,6 +1,6 @@
 import os
 import yt_dlp
-from telegram import Update, ChatAction
+from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 from flask import Flask
 from threading import Thread
@@ -79,7 +79,7 @@ async def handle_message(update: Update, context):
     chat = update.effective_chat
     user = update.effective_user
 
-    await context.bot.send_chat_action(chat_id=chat.id, action=ChatAction.UPLOAD_DOCUMENT)
+    await context.bot.send_chat_action(chat_id=chat.id, action="upload_document")
 
     file_path = None
     try:
@@ -95,6 +95,32 @@ async def handle_message(update: Update, context):
                 video=open(file_path, 'rb'),
                 caption=caption_text,
                 parse_mode="MarkdownV2"
+            )
+        except:
+            await context.bot.send_document(
+                chat_id=chat.id,
+                document=open(file_path, 'rb'),
+                caption=caption_text[:1024],
+                parse_mode="MarkdownV2"
+            )
+
+    except Exception as e:
+        await update.message.reply_text(f"❌ Error: {str(e)}")
+    finally:
+        if file_path and os.path.exists(file_path):
+            os.remove(file_path)  # Ensure cleanup even on errors
+
+# === Main ===
+def main():
+    application = Application.builder().token(TOKEN).build()
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+
+    keep_alive()
+    application.run_polling()
+
+if __name__ == "__main__":
+    main()                parse_mode="MarkdownV2"
             )
         except:
             await context.bot.send_document(
