@@ -11,7 +11,7 @@ import logging
 TOKEN = os.getenv("7658699792:AAGjX9RVnOncN7ZYaW-9F9Glu2nCkAioVSc")  # Use environment variable
 DOWNLOAD_DIR = "downloads"
 COOKIE_FILE = "cookies.txt"
-BOT_USERNAME = "@DownloaderReelbot"
+BOT_USERNAME = "@Downloderprobdbot"
 
 # Create directories and files
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
