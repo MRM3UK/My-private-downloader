@@ -37,7 +37,7 @@ def keep_alive():
 
 # Escape MarkdownV2 special chars for captions
 def clean_caption(text):
-    return re.sub(r'([_*`()~>#+\-=|{}.!\)', r'\\\1', text)
+    return re.sub(r'([_*`()~>#+=|{}.!\\-])', r'\\\1', text)
 
 # Build caption with uploader, caption, url, and bot username
 def build_caption(uploader, title, caption, url):
