@@ -8,7 +8,7 @@ import re
 import logging
 
 # === CONFIG ===
-TOKEN = os.getenv("8052121647:AAGyRuu7gTo4zfcNOMvLifNzsRtCY-tQlig")  # Use environment variable
+TOKEN = os.getenv("7658699792:AAGjX9RVnOncN7ZYaW-9F9Glu2nCkAioVSc")  # Use environment variable
 DOWNLOAD_DIR = "downloads"
 COOKIE_FILE = "cookies.txt"
 BOT_USERNAME = "@DownloaderReelbot"
