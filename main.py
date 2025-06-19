@@ -8,7 +8,7 @@ import re
 import logging
 
 # === CONFIG ===
-TOKEN = os.getenv("7658699792:AAGjX9RVnOncN7ZYaW-9F9Glu2nCkAioVSc")  # Use environment variable
+TOKEN = "7658699792:AAGjX9RVnOncN7ZYaW-9F9Glu2nCkAioVSc"  # Fixed: using hardcoded token
 DOWNLOAD_DIR = "downloads"
 COOKIE_FILE = "cookies.txt"
 BOT_USERNAME = "@Downloderprobdbot"
@@ -21,7 +21,7 @@ if not os.path.exists(COOKIE_FILE):
 # === Logging ===
 logging.basicConfig(level=logging.INFO)
 
-# === Keep-alive with Flask ===
+# === Keep-alive with Flask (for Replit/Render) ===
 app = Flask(__name__)
 
 @app.route('/')
@@ -29,7 +29,7 @@ def home():
     return "Bot is online!"
 
 def run():
-    port = int(os.getenv("PORT", 8080))  # Use Render's PORT or default to 8080
+    port = int(os.getenv("PORT", 8080))  # Use Render's PORT or default
     app.run(host='0.0.0.0', port=port)
 
 def keep_alive():
@@ -37,7 +37,7 @@ def keep_alive():
 
 # === Clean caption (escape MarkdownV2) ===
 def clean_caption(text):
-    return re.sub(r'([_*`\[()\]~\>#+\-|=|{}.!\\])', r'\\\1', text)
+    return re.sub(r'([_*`\\()~>#+\\-=|{}.!\\\)', r'\\\1', text)
 
 # === Format final caption ===
 def build_caption(insta_username, title, caption, url):
@@ -54,7 +54,7 @@ def build_caption(insta_username, title, caption, url):
 # === Download video ===
 def download_video(url):
     ydl_opts = {
-        'format': 'best[filesize<50M]',  # Limit to 50MB for Telegram
+        'format': 'bestvideo+bestaudio/best',
         'cookiefile': COOKIE_FILE,
         'outtmpl': f"{DOWNLOAD_DIR}/%(title).40s.%(ext)s",
         'quiet': True,
